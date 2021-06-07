@@ -1,0 +1,62 @@
+﻿
+
+@{ //Layout = "~/Views/Shared/_Layout.cshtml";
+                Layout = null; }
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <link rel="shortcut icon" href="~/ui/imgs/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css//loading.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="~/ui/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/ui/css/style.css">
+    <title>Foodpanda</title>
+    <style>
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="~/js/zc.js"></script>
+    <div class="loading" style="display:none;" id="_dload">Loading&#8230;</div>
+    <div class="container">
+        <nav class="custom-navbar">
+            <div class="logo">
+                <img src="~/ui/imgs/foodpanda-logo.png" height="55">
+            </div>
+            <div class="logo">
+                <img src="~/ui/imgs/panda-mart.png" height="25">
+            </div>
+        </nav>
+
+        <div class="contents">
+            <img src="~/ui/imgs/background/top-left.png" class="bg bg-top-left">
+            <img src="~/ui/imgs/background/top-right.png" class="bg bg-top-right">
+            <img src="~/ui/imgs/background/bottom-left.png" class="bg bg-bottom-left">
+            <img src="~/ui/imgs/background/bottom-right.png" class="bg bg-bottom-right">
+
+
+            @RenderBody()
+        </div>
+    </div>
+    <!-- Bootstrap JavaScript Bundle with Popper -->
+    <script src="~/ui/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

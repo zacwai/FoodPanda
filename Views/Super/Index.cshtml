@@ -1,0 +1,145 @@
+﻿@model ViewOutput
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml"; ;
+}
+@if (string.IsNullOrEmpty(Model.ErrMsg))
+{
+    <div style="margin-top:50px;">
+        <div class="row">
+            <div class="col-md-3 d-md-block d-sm-none"></div>
+            <div class="col-md-6 col-sm-12">
+
+                <div class="row">
+                    <div class="col-md-2 col-sm-12"></div>
+                    <div class="col-md-4 col-sm-12"><div style="width:95%;display: block; margin-left: auto; margin-right: auto; padding-bottom:10px;"><a class="btn btnMen" id="Promoter" href="#)">Upload<br />Promoter</a></div></div>
+                    <div class="col-md-4 col-sm-12"><div style="width:95%;display: block; margin-left: auto; margin-right: auto; padding-bottom:10px;"><a class="btn btnMen" id="PromoCode" href="#">Upload<br />PromoCode</a></div></div>
+                </div>
+
+            </div>
+            <div class="col-md-3 d-md-block d-sm-none"></div>
+        </div>
+    </div>
+}
+
+<div class="modal fade" id="_modelDownload" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Upload</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form role="form" id="_formUpload">
+                <input type="text" style="display:none;" name="Type" id="_inpType" value="">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="file" class="form-control" name="file" accept="text/plain" />
+                    </div>
+
+                    <div class="form-group">
+                        <input class="form-control" type="password" name="Id" id="_inpPassword" placeholder="password" value="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCloseCreate">Close</button>
+                    <button type="submit" class="btn btn-primary" style="display:none;" id="_btnDownload">Download</button>
+                    <button type="button" class="btn btn-primary" style="background-color:#e870c5; border-color:#e870c5;" id="_divId">Upload</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    var pass = false;
+
+        $(document).ready(function () {
+
+            $("#_divId").click(function (e) {
+                var password = document.getElementById('_inpPassword').value;
+                $.ajax({
+                    url: "/Super/_pwd?i=" + password,
+                    type: "Get",
+                    async: false,
+                    success: function (data) {
+                        pass = data == "";
+                        if (data != "") {
+                            alert(data);
+                        }
+                    },
+                    failure: function (data) {
+                        DisplayErrMsg("_MainMsgError", errorMsg);
+                    },
+                    error: function (data) {
+                        DisplayErrMsg("_MainMsgError", errorMsg);
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+                if (pass)
+                    document.getElementById("_btnDownload").click();
+            });
+
+            $(".btnMen").click(function (e) {
+                var id = $(this).attr('id');
+                document.getElementById('exampleModalCenterTitle').innerHTML = "Upload " + id;
+                document.getElementById('_inpType').value = id;
+                $('#_modelDownload').modal('show');
+            });
+            $("#_formUpload").submit(function (e) {
+                e.preventDefault();
+                var formData = new FormData($(this)[0]);
+                $.ajax({
+                    url: "/Super/Upload/",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    mathod: "POST",
+                    type: "POST",
+                    data: formData,
+                    async: false,
+                    success: function (data) {
+                        var pass = data=="";
+                        if (pass) {
+                            $('#_modelDownload').modal('hide');
+                            alert("Upload successful");
+                        }
+                        else {
+                            alert(data);
+                        }
+                    },
+                    failure: function (data) {
+                        DisplayErrMsg("_MainMsgError", "failure: " + data);
+                    },
+                    error: function (jqXHR, exception) {
+                        var msg = '';
+                        if (jqXHR.status === 0) {
+                            msg = 'Not connect.\n Verify Network.';
+                        } else if (jqXHR.status == 404) {
+                            msg = 'Requested page not found. [404]';
+                        } else if (jqXHR.status == 500) {
+                            msg = 'Internal Server Error [500].';
+                        } else if (exception === 'parsererror') {
+                            msg = 'Requested JSON parse failed.';
+                        } else if (exception === 'timeout') {
+                            msg = 'Time out error.';
+                        } else if (exception === 'abort') {
+                            msg = 'Ajax request aborted.';
+                        } else {
+                            msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                        }
+                        DisplayErrMsg("_MainMsgError", "error: " + msg);
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            });
+    });
+</script>

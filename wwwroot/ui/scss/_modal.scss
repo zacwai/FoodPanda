@@ -1,0 +1,77 @@
+/*-------------------------------------
+            Bootstrap Modal
+--------------------------------------*/
+
+.modal {
+    padding: 0px 15px;
+}
+
+.modal-content {
+    border-radius: 15px;
+    border: 0px;
+    background-color: $bg-color-2;
+    @include box-shadow2;
+}
+
+.modal-header {
+    border-bottom: none !important;
+    padding: 20px;
+    background-color: $bg-color-2;
+    color: $dark-gray;
+    border-radius: 15px;
+    position: relative;
+
+    .btn-close-custom {
+        width: 40px;
+        height: 40px;
+        border: none;
+        background-color: $pink;
+        padding: 10px;
+        border-radius: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: -10px;
+        right: -10px;
+
+        svg {
+            fill: white;
+        }
+
+        &::after {
+            background-image: none !important;
+        }
+
+        &:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    }
+}
+
+.modal-body {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+
+    h5 {
+        line-height: 30px;
+    }
+
+}
+
+.modal-footer {
+    border-top: none !important;
+    padding: 30px;
+    padding-top: 20px;
+
+    .btn {
+        margin: 0px;
+    }
+}
+
+
+/* -------------------------------------
+               Media Query
+----------------------------------------*/
+@media (max-width: 576px) {}

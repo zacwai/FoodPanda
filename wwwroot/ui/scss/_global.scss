@@ -1,0 +1,42 @@
+/*-------------------------------------
+                 Global
+--------------------------------------*/
+
+*:focus {
+    outline: none !important;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Montserrat' !important;
+    background-color: $bg-color;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid $dark-gray-10;
+    margin: 1em 0;
+    padding: 0;
+}
+
+table {
+    td {
+        font-weight: 400;
+        color: $dark-gray-75;
+        font-size: 14px;
+    }
+}
+
+footer {
+    padding: 26px 0px;
+
+    p {
+        color: white;
+    }
+}
+

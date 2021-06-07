@@ -1,0 +1,105 @@
+﻿@model PublicViewOutput
+
+@{ 
+Layout = "~/Views/Shared/_Layout3.cshtml";
+var currentUrl = Model.URL +"/"+ Model.Id;
+var registerLink=Model.URL+ "/r/" + Model.Id;
+    
+}
+    
+
+@if (Model != null)
+{
+    <div class="title text-center">
+        <h3 class="text-white mb-1">Scan here for</h3>
+        <h1>PROMO CODE!</h1>
+    </div>
+    <div class="qr-wrapper my-3">
+        <img src="~/ui/imgs/qr-background.png" width="100%">
+        <a data-bs-toggle="modal" data-bs-target="#exampleModal">
+            @*<img src="~/ui/imgs/qr.png" width="45%" class="qr">*@
+            <img src="@(Model.PublicObject.ToString())" width="45%" class="qr">
+        </a>
+    </div>
+    <div class="text-center">
+        <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-secondary mt-4" style="font-weight:600;">REDEEM NOW</a>
+    </div> 
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close">
+                        <img src="~/ui/imgs/close.png" width="20">
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <p class="large">
+                        This promo code is applicable for first time users on pandamart or Shops ONLY.
+                    </p>
+                    <a href="@Url.Action("Index", "Register", new { id = Model.Id })" class="btn btn-secondary mt-1 mb-5">
+                        <h6>I AM A NEW USER / <br> FIRST TIME USER</h6>
+                    </a>
+                    <h6>I AM A FREQUENT <br> FOODPANDA USER.</h6>
+                    @*<a data-bs-toggle="modal" data-bs-target="#shareModal" class="btn btn-secondary mt-2 mb-4">
+                            Forward this promo to your <br> friends and family
+                        </a>*@
+                    <a onclick="onCC_ShareModel()" class="btn btn-secondary mt-2 mb-4">
+                        Forward this promo to your <br> friends and family
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close-custom" onclick="onCC()">
+                        <img src="~/ui/imgs/close.png" width="20">
+                    </button>
+                    @*<button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close">
+                            <img src="~/ui/imgs/close.png" width="20">
+                        </button>*@
+                </div>
+                <div class="modal-body text-center">
+                    
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon3" style="cursor:pointer;" onclick="copyFuc()">COPY</span>
+                        <input type="text" class="form-control form-control-lg" value="@currentUrl" id="_inputPromoCode" readonly>
+                    </div>
+                <div style="color:white; background-color:#1a1a1a; padding:3px; border-radius:2px; display:none; font-weight:600;" id="divCopy">Copied!</div>
+                    @*<h6>Share on</h6>
+                    <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fpanda.klicker.event%2Fqr%2Fpanda">Share on Facebook</a>
+                    <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fpanda.klicker.event%2Fqr%2Fpanda">Share on Twitter</a>
+                    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fpanda.klicker.event%2Fqr%2Fpanda">Share on LinkedIn</a>*@
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    function copyFuc() {
+        var copyText = document.getElementById("_inputPromoCode");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999)
+        document.execCommand("copy");
+        document.getElementById("divCopy").style.display = "";
+        setTimeout(hide, 2000);
+        //alert("Copied the text: " + copyText.value);
+    }
+
+    function onCC_ShareModel() {
+        $('#shareModal').modal('show');
+        $('#exampleModal').modal('hide');
+    }
+    function onCC() {
+        $('#shareModal').modal('hide');
+        $('#exampleModal').modal('show');
+    }
+</script>

@@ -1,0 +1,94 @@
+/*-------------------------------------
+                Inputs
+--------------------------------------*/
+
+input.form-control,
+textarea.form-control {
+    font-size: 14px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: 400;
+    color: $dark-gray;
+    border-color: white;
+    border-radius: 8px;
+
+    &::placeholder {
+        font-weight: 400;
+    }
+}
+
+select.form-select {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 14px;
+    border-radius: 8px;
+}
+
+input.form-control-lg {
+    font-size: 16px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+textarea.form-control {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+textarea.form-control-sm {
+    font-size: 12px;
+}
+
+.form-control,
+.form-select {
+    &::placeholder {
+        color: $dark-gray-50 !important;
+        font-weight: 300;
+    }
+
+    &:focus {
+        border-color: $pink !important;
+        outline: 0;
+        box-shadow: none !important;
+    }
+}
+
+.input-group {
+    .input-group-text {
+        background-color: $pink;
+        color: white;
+        padding-left: 16px;
+        padding-right: 16px;
+        font-size: 18px;
+        font-weight: 700;
+        border-radius: 8px;
+        border-color: transparent;
+    }
+
+    .form-control-lg {
+        color: black;
+        font-size: 18px;
+        font-weight: 700;
+    }
+}
+
+.form-check-input {
+    border-color: white;
+
+    &:focus {
+        outline: none;
+        box-shadow: none;
+        border-color: white;
+    }
+}
+
+.form-check-input:checked {
+    background-color: $pink;
+    border-color: $pink;
+}
+
+.form-control:disabled,
+.form-control[readonly] {
+    background-color: white;
+    opacity: 1;
+}

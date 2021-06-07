@@ -1,0 +1,197 @@
+﻿@model PublicViewOutput
+
+@{ Layout = "~/Views/Shared/_Layout3.cshtml";}
+
+
+<section class="registration" id="divRegistration" style="display:block">
+    <div class="text-center">
+        <p class="large">
+            Please fill in your personal information and provide valid phone number to receive SMS
+        </p>
+    </div>
+    <form role="form" id="_formEdit">
+        <input type="text" class="form-control" style="display:none;" name="Id" value="@Model.Id" id="">
+        <div class="mb-3">
+            <input type="text" class="form-control" placeholder="Full Name" name="FullName" id="_iName" value="">
+            <div style="color:red; font-weight:600; font-size:small;" id="_e3"></div>
+        </div>
+        <div class="mb-3">
+            <input type="email" class="form-control" placeholder="Email" name="Email" id="_iEmail" value="">
+            <div style="color:red; font-weight:600; font-size:small;" id="_e1"></div>
+        </div>
+        <div class="mb-3">
+            <input type="number" class="form-control" placeholder="Phone Number (eg: 0121234567)" name="Contact" id="_iContact" value="">
+            <div style="color:red; font-weight:600; font-size:small;" id="_e2"></div>
+        </div>
+        <div class="mb-5">
+            <select class="form-select" name="State">
+                @foreach (var state in Panda.Data.STATE.STATE_LIST)
+                {
+                <option value="@state">@state</option>
+}
+            </select>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" onchange="oncheckchange()">
+            <small class="form-check-label" for="flexCheckDefault">
+                I understand and agree to the Terms & Conditions, <span class="text-white"> Privacy Policy and Acceptable Use Only. </span>
+            </small>
+        </div>
+        <div style="color:red; font-weight:600; font-size:small;" id="_e5"></div>
+
+        <div class="text-center">
+            <button type="submit" class="form-control" style="display:none;" id="_bsubmit"></button>
+            <a href="#" onclick="verifyInput()" class="btn btn-primary mt-3 btn-round">Redeem my voucher</a>
+            <div style="color:red; font-weight:600; font-size:small;" id="_e4"></div>
+        </div>
+    </form>
+</section>
+
+<section class="success text-center mt-5" id="divAwesome" style="display:none">
+    <h1>AWESOME!</h1>
+    <p class="large text-white">
+        You will receive a verification link via SMS. Kindly click on the link to redeem your voucher!
+    </p>
+</section>
+
+<div class="text-center">
+    <a href="https://www.foodpanda.my/contents/contact.htm" class="btn btn-secondary mt-5">
+        <h6>HELP CENTER</h6>
+    </a>
+</div>
+
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    function oncheckchange() {
+        if (!document.getElementById('flexCheckDefault').checked) {
+            document.getElementById('_e5').innerHTML = "Please agree with Terms & Conditions before proceed";
+
+        } else {
+            document.getElementById('_e5').innerHTML = "";
+        }
+    }
+    function verifyInput() {
+        var ok = true;
+        
+        if (!document.getElementById('flexCheckDefault').checked) {
+            document.getElementById('_e5').innerHTML = "Please agree with Terms & Conditions before proceed";
+            ok = false;
+        }
+
+        var email = document.getElementById('_iEmail').value;
+        if (!validateEmail(email, '_e1')) {
+            ok = false;
+        }
+        var contact = document.getElementById('_iContact').value;
+        if (!validateContact(contact, '_e2')) {
+            ok = false;
+        }
+        if (document.getElementById('_iName').value == '') {
+            document.getElementById('_e3').innerHTML = "Invalid name";
+            ok = false;
+        }
+        if (!ok) 
+            return;
+
+        document.getElementById("_dload").style.display = "";
+        timer = setTimeout(function () {
+            document.getElementById("_bsubmit").click();
+        }, 500);
+    }
+
+    $(document).ready(function () {
+        //$('#_iEmail').first().focusout(function () {
+        //    var $value = this.value;
+        //    if (!validateEmail($value, '_e1')) {
+        //        return false;
+        //    }
+        //});
+        $('#_iName').first().focusout(function () {
+            var value = document.getElementById('_iName').value;
+            if (value=="") {
+                document.getElementById('_e3').innerHTML = "Invalid name";
+            }
+            else {
+                document.getElementById('_e3').innerHTML = "";
+            }
+        });
+
+        $('#_iName').first().keyup(function () {
+            $(this).val($(this).val().toUpperCase());
+            var value = document.getElementById('_iName').value;
+            if (value == null|| value == '') {
+                document.getElementById('_e3').innerHTML = "Invalid name";
+            }
+            else {
+                document.getElementById('_e3').innerHTML = "";
+            }
+        });
+
+        $('#_iEmail').keyup(function (e) {
+            var value = document.getElementById('_iEmail').value;
+            validateEmail(value, '_e1')
+        });
+
+        $('#_iContact').keyup(function (e) {
+            var value = document.getElementById('_iContact').value;
+            validateContact(value, '_e2')
+            if (value.length >= 12) {
+                return false;
+            }
+        });
+
+        $("#_formEdit").submit(function (e) {
+            e.preventDefault();
+            var formData = new FormData($(this)[0]);
+            $.ajax({
+                url: "/Register/_Reg/",
+                type: "POST",
+                data: formData,
+                async: false,
+                success: function (data) {
+                    if (data.length == 0) {
+                        document.getElementById('divRegistration').style.display = "none";
+                        document.getElementById('divAwesome').style.display = "";
+                    }
+                    else {
+                        for (var i = 0; i < data.length; i++) {
+                            
+                            var em = data[i];
+                            document.getElementById('_e' + em.requestId).innerHTML = em.errMsg;
+                        }
+                    }
+                    document.getElementById("_dload").style.display = "none";
+                },
+                failure: function (data) {
+                    alert("failure: "+data);
+                },
+                error: function (jqXHR, exception) {
+                    var msg = '';
+                    if (jqXHR.status === 0) {
+                        msg = 'Not connect.\n Verify Network.';
+                    } else if (jqXHR.status == 404) {
+                        msg = 'Requested page not found. [404]';
+                    } else if (jqXHR.status == 500) {
+                        msg = 'Internal Server Error [500].';
+                    } else if (exception === 'parsererror') {
+                        msg = 'Requested JSON parse failed.';
+                    } else if (exception === 'timeout') {
+                        msg = 'Time out error.';
+                    } else if (exception === 'abort') {
+                        msg = 'Ajax request aborted.';
+                    } else {
+                        msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                    }
+                    alert("exception: "+msg);
+
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+    });
+</script>

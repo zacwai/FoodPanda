@@ -1,0 +1,71 @@
+﻿@model PublicViewOutput
+
+@{ Layout = "~/Views/Shared/_Layout3.cshtml";
+    VerificationOutput _model = Model.PublicObject as VerificationOutput; }
+
+@if (!string.IsNullOrEmpty(Model.ErrMsg) || _model == null)
+{
+<section class="promo-code">
+    <div class="text-center">
+        <h1>Oh no!</h1>
+        <p class="text-white">
+            @Model.ErrMsg
+        </p>
+    </div>
+</section> }
+else
+{
+<section class="promo-code">
+    <div class="text-center">
+        <h1>HERE'S YOUR <br> PROMO CODE!</h1>
+        <p class="text-white">
+            Just copy and paste this code when you make your first purchase at pandamart or Shops! Happy Shopping!
+        </p>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon3" style="cursor:pointer;" onclick="copyFuc()">COPY</span>
+            <input type="text" class="form-control form-control-lg" value="@_model.PromoCode" id="_inputPromoCode" readonly>
+        </div>
+        <div style="color:white; background-color:#1a1a1a; padding:3px; border-radius:2px; display:none; font-weight:600;" id="divCopy">Copied!</div>
+        <p style="font-weight:600;">*Promo codes are valid till @_model.ExpireDate <br> *T&C apply.</p>
+    </div>
+
+    <div class="download-wrapper mt-5">
+        <small class="text-white mb-2">Download the foodpanda app with</small>
+        <div class="row g-2">
+            <div class="col">
+                <a href="https://apps.apple.com/us/app/foodpanda-food-delivery/id758103884">
+                    <img src="~/ui/imgs/app-store.png" width="100%">
+                </a>
+            </div>
+            <div class="col">
+                <a href="https://play.google.com/store/apps/details?id=com.global.foodpanda.android">
+                    <img src="~/ui/imgs/google-play.png" width="100%">
+                </a>
+            </div>
+        </div>
+    </div>
+</section>}
+
+<div class="text-center">
+    <a href="https://www.foodpanda.my/contents/contact.htm" class="btn btn-secondary mt-5">
+        <h6>HELP CENTER</h6>
+    </a>
+</div>
+
+
+<script>
+function copyFuc() {
+    var copyText = document.getElementById("_inputPromoCode");
+  copyText.select();
+  copyText.setSelectionRange(0, 99999)
+    document.execCommand("copy");
+    document.getElementById("divCopy").style.display = "";
+    setTimeout(hide, 2000);
+  //alert("Copied the text: " + copyText.value);
+}
+
+    function hide() {
+        document.getElementById("divCopy").style.display = "none";
+    }
+</script>

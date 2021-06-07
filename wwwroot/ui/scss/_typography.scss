@@ -1,0 +1,119 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: $pink;
+    font-weight: 900;
+}
+
+h1 {
+    font-size: 32px;
+    line-height: 38px;
+
+    &.big {
+        font-size: 36px;
+    }
+}
+
+h2 {
+    font-size: 28px;
+    line-height: 36px;
+}
+
+h3 {
+    font-size: 24px;
+    line-height: 30px;
+}
+
+h4 {
+    font-size: 22px;
+    line-height: 28px;
+}
+
+h5 {
+    font-size: 20px;
+    line-height: 28px;
+}
+
+h6 {
+    font-size: 18px;
+    line-height: 25px;
+}
+
+p {
+    font-size: 14px;
+    line-height: 24px;
+    color: $pink;
+    font-weight: 400;
+
+    &.large {
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 400;
+    }
+}
+
+label {
+    font-size: 14px;
+    line-height: 24px;
+    color: $pink;
+    font-weight: 400;
+}
+
+a {
+    color: $light-blue;
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+    @include transition;
+
+    &:hover {
+        color: $light-blue-75;
+        text-decoration: none;
+    }
+}
+
+small {
+    font-size: 12px;
+    line-height: 20px;
+    color: $pink;
+    font-weight: 400;
+    display: inline-block;
+
+    a {
+        font-size: 12px;
+    }
+}
+
+b {
+    font-weight: 700;
+}
+
+strong {
+    font-weight: 700;
+    font-size: 14px;
+}
+
+ul li {
+    font-size: 14px;
+    line-height: 28px;
+    color: $dark-gray-75;
+    font-weight: 400;
+}
+
+ol li {
+    font-size: 14px;
+    line-height: 28px;
+    color: $dark-gray-75;
+    font-weight: 400;
+
+    ol {
+        margin-bottom: 14px;
+    }
+
+    b {
+        font-size: 14px;
+    }
+}

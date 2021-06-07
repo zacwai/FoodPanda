@@ -1,0 +1,104 @@
+/* -------------------------------------
+                Colors
+----------------------------------------*/
+
+$pink: #D70F64;
+$pink-light: #EB87B1;
+$bg-color: #EF9FC1;
+$bg-color-2: #F9DBE8;
+
+$orange: #F6A623;
+$orange-75: #F9BD5A;
+$orange-50: #FAD291;
+$orange-25: #FDE9C8;
+$orange-10: #FEF6E9;
+
+$light-blue: #4BBFDD;
+$light-blue-75: #78D0E6;
+$light-blue-50: #A6DFEE;
+$light-blue-25: #D3F0F7;
+$light-blue-10: #EDF8FC;
+
+$dark-green: #23B559;
+$dark-green-75: #5BC783;
+$dark-green-50: #91D9AC;
+$dark-green-25: #C8ECD5;
+$dark-green-10: #E9F7EE;
+$dark-green-6: #F2FBF5;
+
+$dark-gray: #32373F;
+$dark-gray-75: #6C6F74;
+$dark-gray-50: #A0A1A5;
+$dark-gray-25: #D0D1D3;
+$dark-gray-10: #ECEDEE;
+
+$red-color: #FF5627;
+$light-green: #00bdaa;
+$oliv: #2b580c;
+
+$border-color: #D8D8D8;
+$border-color-2: #f2f2f2;
+$ab-color: #f6f7f8;
+$light-gray: #F9F9F9;
+
+/* -------------------------------------
+                Box Shadow
+----------------------------------------*/
+@mixin box-shadow($shadow: 0px 2px 9px -2px rgba(0, 0, 0, 0.17)) {
+    -webkit-box-shadow: $shadow;
+    -moz-box-shadow: $shadow;
+    box-shadow: $shadow;
+}
+
+@mixin box-shadow2($shadow2: 0px 7px 19px -6px rgba(0, 0, 0, 0.25)) {
+    -webkit-box-shadow: $shadow2;
+    -moz-box-shadow: $shadow2;
+    box-shadow2: $shadow2;
+}
+
+@mixin box-shadow3($shadow3: 0px 20px 40px 10px rgba(0, 0, 0, 0.07)) {
+    -webkit-box-shadow: $shadow3;
+    -moz-box-shadow: $shadow3;
+    box-shadow2: $shadow3;
+}
+
+@mixin box-shadow4($shadow4: 0px 2px 0px -2px rgba(0, 0, 0, 0.17)) {
+    -webkit-box-shadow: $shadow4;
+    -moz-box-shadow: $shadow4;
+    box-shadow: $shadow4;
+}
+
+@mixin box-shadow5($shadow5: 0px 2px 4px -2px rgba(0, 0, 0, 0.17)) {
+    -webkit-box-shadow: $shadow5;
+    -moz-box-shadow: $shadow5;
+    box-shadow: $shadow5;
+}
+
+/* -------------------------------------
+                Transitioin
+----------------------------------------*/
+@mixin transition($transition: all .3s) {
+    -moz-transition: $transition;
+    -o-transition: $transition;
+    -webkit-transition: $transition;
+    transition: $transition;
+}
+
+
+/* -------------------------------------
+            Background Overlay
+----------------------------------------*/
+@mixin dark-overlay {
+    &:after {
+        content: "";
+        width: 100%;
+        height: auto;
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, .8);
+    }
+}

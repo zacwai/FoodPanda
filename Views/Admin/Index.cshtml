@@ -1,0 +1,138 @@
+﻿@model ViewOutput
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml"; ;
+}
+@if (string.IsNullOrEmpty(Model.ErrMsg))
+{
+    <div style="margin-top:50px;">
+        <div class="row">
+            <div class="col-md-3 d-md-block d-sm-none"></div>
+            <div class="col-md-6 col-sm-12">
+
+                <div class="row">
+                    <div class="col-md-4 col-sm-12"><div style="width:95%;display: block; margin-left: auto; margin-right: auto; padding-bottom:10px;"><a class="btn btnMen" id="Member" href="#">Download<br />Member</a></div></div>
+                    <div class="col-md-4 col-sm-12"><div style="width:95%;display: block; margin-left: auto; margin-right: auto; padding-bottom:10px;"><a class="btn btnMen" id="Promoter" href="#)">Download<br />Promoter</a></div></div>
+                    <div class="col-md-4 col-sm-12"><div style="width:95%;display: block; margin-left: auto; margin-right: auto; padding-bottom:10px;"><a class="btn btnMen" id="PromoCode" href="#">Download<br />PromoCode</a></div></div>
+                </div>
+
+            </div>
+            <div class="col-md-3 d-md-block d-sm-none"></div>
+        </div>
+    </div>
+}
+
+<div class="modal fade" id="_modelDownload" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Download</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("Download", "Admin", FormMethod.Post, new { target = "_blank" }))
+            {
+                <input type="text" style="display:none;" name="Type" id="_inpType" value="">
+                <div class="modal-body">
+                    <div class="form-group" id="_chkDate" style="display:none;">
+                        <select name="Date" class="form-control">
+                            @{
+                                var dtnow = DateTime.Now.Date;
+                                var startdate = new DateTime(2021, 6, 1);
+                                var counter = 0;
+                                var checkdate = startdate.AddMonths(counter);
+                                if (checkdate <= dtnow)
+                                {
+                                    <option value="@checkdate.ToString("MM yyyy")">@checkdate.ToString("MMM yyyy")</option>
+                                    counter++;
+                                    checkdate = startdate.AddMonths(counter);
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                            <input class="form-control" type="password" name="Password" id="_inpPassword" placeholder="password" value="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCloseCreate">Close</button>
+                    <button type="submit" class="btn btn-primary" style="display:none;" id="_btnDownload">Download</button>
+                    <button type="button" class="btn btn-primary"  style="background-color:#e870c5; border-color:#e870c5;" id="_divId">Download</button>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    var pass = false;
+
+        $(document).ready(function () {
+            //$('#_inpPassword').first().focusout(function () {
+            //    pass = false;
+            //    var password = document.getElementById('_inpPassword').value;
+            //    $.ajax({
+            //        url: "/Admin/_pwd?i=" + password,
+            //        type: "Get",
+            //        async: false,
+            //        success: function (data) {
+            //            pass = data == "";
+            //            if (data != "") {
+            //                alert(data);
+            //            }
+            //        },
+            //        failure: function (data) {
+            //            DisplayErrMsg("_MainMsgError", errorMsg);
+            //        },
+            //        error: function (data) {
+            //            DisplayErrMsg("_MainMsgError", errorMsg);
+            //        },
+            //        cache: false,
+            //        contentType: false,
+            //        processData: false
+            //    });
+            //});
+
+            $("#_divId").click(function (e) {
+                var password = document.getElementById('_inpPassword').value;
+                $.ajax({
+                    url: "/Admin/_pwd?i=" + password,
+                    type: "Get",
+                    async: false,
+                    success: function (data) {
+                        pass = data == "";
+                        if (data != "") {
+                            alert(data);
+                        }
+                    },
+                    failure: function (data) {
+                        DisplayErrMsg("_MainMsgError", errorMsg);
+                    },
+                    error: function (data) {
+                        DisplayErrMsg("_MainMsgError", errorMsg);
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+                if (pass)
+                    document.getElementById("_btnDownload").click();
+            });
+
+            $(".btnMen").click(function (e) {
+                var id = $(this).attr('id');
+                document.getElementById('exampleModalCenterTitle').innerHTML = "Download " + id;
+                document.getElementById('_inpType').value = id;
+                if (id == "Promoter") {
+                    document.getElementById('_chkDate').style.display = "none";
+                } else {
+                    document.getElementById('_chkDate').style.display = "block";
+                }
+                $('#_modelDownload').modal('show');
+            });
+    });
+</script>
